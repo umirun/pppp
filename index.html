@@ -1,42 +1,224 @@
 <!DOCTYPE html>
-<html lang="uz">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>💰 Valyuta → So‘m Konvertori | umrbekCodeX</title>
-  <link rel="stylesheet" href="styles.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valyuta Konvertor | AsrorCodeX</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <main class="app">
-    <h1 class="title">💰 Valyuta → So‘m Konvertori | umrbekCodeX</h1>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-coins"></i>
+                <span>AsrorCodeX</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#hero" class="nav-link">Home</a></li>
+                <li><a href="#converter" class="nav-link">Konvertor</a></li>
+                <li><a href="#info" class="nav-link">Info</a></li>
+                <li><a href="#rates" class="nav-link">Kurslar</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
 
-    <section class="panel">
-      <div class="field">
-        <label for="amount">Miqdor</label>
-        <input id="amount" type="number" step="0.01" placeholder="Masalan: 100"/>
-      </div>
-
-      <div class="field">
-        <label for="currency">Valyuta</label>
-        <select id="currency">
-          <option value="USD" selected>USD — AQSh Dollari</option>
-          <option value="RUB">RUB — Rossiya Rubli</option>
-        </select>
-      </div>
-
-      <button id="convertBtn" class="btn">Convert → UZS</button>
-
-      <div id="result" class="result">Natija bu yerda ko‘rinadi</div>
-      <div id="status" class="status">Tayyor...</div>
+    <!-- Hero Section -->
+    <section id="hero" class="hero-section">
+        <div class="particles-container">
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+        </div>
+        <div class="hero-content">
+            <h1 class="hero-title">
+                <span class="title-main">Valyuta Konvertori</span>
+                <span class="title-sub">by AsrorCodeX</span>
+            </h1>
+            <p class="hero-description">
+                Real-time valyuta ayirboshlash xizmati. O'zbek so'miga tezkina va aniq konvertatsiya.
+            </p>
+            <button class="cta-button" onclick="scrollToSection('converter')">
+                <span>Konvertatsiya qilish</span>
+                <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+        <div class="hero-visual">
+            <div class="floating-card">
+                <i class="fas fa-exchange-alt"></i>
+                <span>1 USD = 12,371.92 UZS</span>
+            </div>
+            <div class="floating-card">
+                <i class="fas fa-chart-line"></i>
+                <span>Live kurslar</span>
+            </div>
+        </div>
     </section>
 
-    <footer class="footer">
-      <span>Online/Offline ishlaydi. Manba: open.er-api.com</span>
+    <!-- Converter Section -->
+    <section id="converter" class="converter-section">
+        <div class="container">
+            <h2 class="section-title">Valyuta Konvertori</h2>
+            <div class="converter-card">
+                <div class="converter-header">
+                    <i class="fas fa-calculator"></i>
+                    <h3>Summani kiriting</h3>
+                </div>
+                <form class="converter-form">
+                    <div class="input-group">
+                        <label for="amount">Miqdor</label>
+                        <input type="number" id="amount" placeholder="0.00" step="0.01" min="0">
+                    </div>
+                    <div class="input-group">
+                        <label for="currency">Valyuta</label>
+                        <select id="currency">
+                            <option value="USD">AQSH Dollari (USD)</option>
+                            <option value="EUR">Yevro (EUR)</option>
+                            <option value="RUB">Rossiya Rubli (RUB)</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="convert-button">
+                        <span>Konvertatsiya qilish</span>
+                        <i class="fas fa-sync-alt"></i>
+                    </button>
+                </form>
+                <div class="result-container">
+                    <div class="result-label">Natija:</div>
+                    <div class="result-amount">
+                        <span id="result-value">0</span>
+                        <span class="currency-symbol">UZS</span>
+                    </div>
+                    <div class="exchange-rate">
+                        <i class="fas fa-info-circle"></i>
+                        <span id="rate-info">1 USD = 12,371.92 UZS</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Info Section -->
+    <section id="info" class="info-section">
+        <div class="container">
+            <h2 class="section-title">Qanday ishlaydi?</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="info-icon">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <h3>Real-time API</h3>
+                    <p>Eng so'nggi valyuta kurslarini real-time rejimida olish uchun xavfsiz API dan foydalanamiz.</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Xavfsiz va Ishonchli</h3>
+                    <p>API ulanishi uzilganda, ishonchli zaxira kurslaridan foydalanamiz.</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">
+                        <i class="fas fa-tachometer-alt"></i>
+                    </div>
+                    <h3>Tezkina Natija</h3>
+                    <p>Minimalistik va tezkina interfeys orqali bir necha soniyada konvertatsiya.</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>Responsive Design</h3>
+                    <p>Barcha qurilmalarda mukammal ko'rinish - kompyuter, planshet va mobil.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Live Rates Section -->
+    <section id="rates" class="rates-section">
+        <div class="container">
+            <h2 class="section-title">Bugungi Valyuta Kurslari</h2>
+            <div class="rates-table-container">
+                <table class="rates-table">
+                    <thead>
+                        <tr>
+                            <th>Valyuta</th>
+                            <th>Kod</th>
+                            <th>Kurs (UZS)</th>
+                            <th>O'zgarish</th>
+                        </tr>
+                    </thead>
+                    <tbody id="rates-tbody">
+                        <tr>
+                            <td><i class="fas fa-dollar-sign"></i>AQSH Dollari</td>
+                            <td>USD</td>
+                            <td class="rate-value">12,371.92</td>
+                            <td class="rate-change positive">+0.15%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="fas fa-euro-sign"></i>Yevro</td>
+                            <td>EUR</td>
+                            <td class="rate-value">14,000.00</td>
+                            <td class="rate-change negative">-0.08%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="fas fa-ruble-sign"></i>Rossiya Rubli</td>
+                            <td>RUB</td>
+                            <td class="rate-value">140.00</td>
+                            <td class="rate-change positive">+0.25%</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="last-updated">
+                    <i class="fas fa-clock"></i>
+                    <span>So'nggi yangilanish: <span id="last-update">Yuklanmoqda...</span></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="footer-section">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <div class="logo-glow">
+                        <i class="fas fa-coins"></i>
+                    </div>
+                    <span>AsrorCodeX</span>
+                </div>
+                <p class="footer-text">
+                    Professional valyuta konvertatsiya xizmati. 2024 Barcha huquqlar himoyalangan.
+                </p>
+                <div class="footer-links">
+                    <a href="#hero" class="footer-link">Bosh sahifa</a>
+                    <a href="#converter" class="footer-link">Konvertor</a>
+                    <a href="#info" class="footer-link">Info</a>
+                    <a href="#rates" class="footer-link">Kurslar</a>
+                </div>
+            </div>
+        </div>
+        <button class="back-to-top" onclick="scrollToTop()">
+            <i class="fas fa-arrow-up"></i>
+        </button>
     </footer>
-  </main>
 
-  <script src="script.j" defer></script>
+    <script src="script.js"></script>
 </body>
-
 </html>
-
