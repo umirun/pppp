@@ -1,126 +1,158 @@
-/* Theme v2: Professional White & Blue */
-body.v2 {
+/* Professional White & Blue Theme */
+:root {
   --bg: #f8fafc;
-  --text: #1e293b;
+  --text: #1e40af;
   --text-dim: #64748b;
   --accent: #2563eb;
+  --danger: #dc2626;
   --card: #ffffff;
   --border: #e2e8f0;
   --shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.06);
-  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-  color: var(--text);
 }
 
-/* Panels and inputs adopt new scheme */
-.v2 .panel {
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+  display: grid;
+  place-items: center;
+}
+
+.app {
+  width: 92%;
+  max-width: 720px;
+  text-align: center;
+}
+
+.title {
+  margin: 24px 0;
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #1e293b;
+  text-shadow: none;
+}
+
+.panel {
   background: var(--card);
   border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
   box-shadow: var(--shadow);
-  border-radius: 8px;
   backdrop-filter: blur(10px);
 }
 
-.v2 input,
-.v2 select {
-  background: var(--card);
-  border: 1px solid var(--border);
-  color: var(--text);
-  border-radius: 6px;
-  padding: 8px 12px;
-  transition: all 0.2s ease;
+.field {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 16px;
+  text-align: left;
 }
 
-.v2 input:focus,
-.v2 select:focus {
+label {
+  color: var(--text-dim);
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+input, select {
+  width: 100%;
+  padding: 12px 14px;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  outline: none;
+  transition: all 0.2s ease;
+  font-size: 0.95rem;
+}
+
+input::placeholder { 
+  color: #94a3b8; 
+}
+
+input:focus, select:focus {
   border-color: var(--accent);
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-  outline: none;
 }
 
-/* Button: Professional blue with subtle hover effects */
-.v2 .btn {
+.btn {
+  cursor: pointer;
+  margin-top: 8px;
+  width: 100%;
+  padding: 14px 18px;
+  font-weight: 600;
   color: white;
-  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  background: linear-gradient(135deg, var(--accent), #1d4ed8);
   border: none;
-  border-radius: 6px;
-  padding: 10px 20px;
-  font-weight: 500;
+  border-radius: 8px;
   box-shadow: 0 2px 4px rgba(37, 99, 235, 0.2);
   transition: all 0.2s ease;
 }
 
-.v2 .btn:hover {
+.btn:hover {
   background: linear-gradient(135deg, #1d4ed8, #1e40af);
   box-shadow: 0 4px 8px rgba(37, 99, 235, 0.3);
   transform: translateY(-1px);
 }
 
-.v2 .btn:active {
+.btn:active {
   transform: translateY(0);
   box-shadow: 0 2px 4px rgba(37, 99, 235, 0.2);
 }
 
-/* Title: Clean and professional */
-.v2 .title {
+.result {
+  margin-top: 18px;
+  font-size: 1.2rem;
   color: var(--text);
-  font-weight: 600;
-  letter-spacing: -0.025em;
-}
-
-/* Result/status color tuning */
-.v2 .result { 
-  color: var(--text);
+  min-height: 1.2em;
+  word-break: break-word;
   font-weight: 500;
 }
 
-.v2 .status,
-.v2 .footer { 
+.status {
+  margin-top: 10px;
+  font-size: 0.9rem;
   color: var(--text-dim);
-  font-size: 0.875rem;
+}
+
+.footer {
+  margin-top: 18px;
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  opacity: 0.9;
 }
 
 /* Additional professional enhancements */
-.v2 .card {
-  background: var(--card);
-  border-radius: 12px;
-  padding: 24px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
-}
-
-.v2 .section-title {
-  color: var(--text);
-  font-size: 1.125rem;
-  font-weight: 600;
-  margin-bottom: 16px;
-}
-
-/* Success state */
-.v2 .success {
+.success {
   color: #059669;
   background: rgba(5, 150, 105, 0.1);
-  padding: 8px 16px;
-  border-radius: 6px;
+  padding: 12px;
+  border-radius: 8px;
   border: 1px solid rgba(5, 150, 105, 0.2);
+  margin-top: 12px;
 }
 
-/* Error state */
-.v2 .error {
-  color: #dc2626;
+.error {
+  color: var(--danger);
   background: rgba(220, 38, 38, 0.1);
-  padding: 8px 16px;
-  border-radius: 6px;
+  padding: 12px;
+  border-radius: 8px;
   border: 1px solid rgba(220, 38, 38, 0.2);
+  margin-top: 12px;
 }
 
 /* Loading state */
-.v2 .loading {
-  color: var(--accent);
-  display: flex;
+.loading {
+  display: inline-flex;
   align-items: center;
   gap: 8px;
+  color: var(--accent);
 }
 
-.v2 .spinner {
+.spinner {
   width: 16px;
   height: 16px;
   border: 2px solid var(--border);
