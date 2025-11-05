@@ -1,224 +1,683 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="uz">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Valyuta Konvertor | AsrorCodeX</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>Valyuta Kurslari - Eng Zor Sayt</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80') center/cover no-repeat fixed;
+            min-height: 100vh;
+            color: white;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        .cursor {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #fff;
+            border-radius: 50%;
+            position: fixed;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            transition: all 0.1s ease;
+            z-index: 9999;
+            mix-blend-mode: difference;
+        }
+        
+        .cursor-follower {
+            width: 40px;
+            height: 40px;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 50%;
+            position: fixed;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            transition: all 0.3s ease;
+            z-index: 9998;
+        }
+        
+        .cursor-click {
+            width: 40px;
+            height: 40px;
+            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 50%;
+            position: fixed;
+            transform: translate(-50%, -50%) scale(0);
+            pointer-events: none;
+            transition: all 0.5s ease;
+            z-index: 9997;
+        }
+        
+        .container {
+            padding-top: 50px;
+            position: relative;
+            z-index: 10;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            backdrop-filter: blur(10px);
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .currency-card {
+            backdrop-filter: blur(10px);
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .currency-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+            background-color: rgba(255, 255, 255, 0.15);
+        }
+        
+        .currency-icon {
+            font-size: 2.5rem;
+            margin-right: 15px;
+        }
+        
+        .currency-name {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .currency-rate {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+        
+        .currency-change {
+            font-size: 1rem;
+            margin-top: 5px;
+        }
+        
+        .positive {
+            color: #4CAF50;
+        }
+        
+        .negative {
+            color: #F44336;
+        }
+        
+        .update-time {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .rain-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 5;
+            overflow: hidden;
+        }
+        
+        .currency-rain {
+            position: absolute;
+            top: -50px;
+            font-size: 1.5rem;
+            animation: fall linear;
+            opacity: 0.8;
+        }
+        
+        @keyframes fall {
+            to {
+                transform: translateY(calc(100vh + 50px));
+            }
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            backdrop-filter: blur(10px);
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+        }
+        
+        .emoji {
+            font-size: 1.5rem;
+            margin: 0 5px;
+            display: inline-block;
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+        
+        .sticker {
+            position: absolute;
+            font-size: 2rem;
+            animation: float 5s infinite ease-in-out;
+            z-index: 1;
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-20px) rotate(10deg);
+            }
+        }
+        
+        .refresh-btn {
+            background-color: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+            cursor: pointer;
+        }
+        
+        .refresh-btn:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top: 4px solid white;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Converter section styles */
+        .converter-section {
+            margin-top: 40px;
+            backdrop-filter: blur(10px);
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        }
+        
+        .converter-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .converter-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .converter-box {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .converter-select, .converter-input {
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            padding: 12px 15px;
+            color: white;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            width: 250px;
+        }
+        
+        .converter-select:focus, .converter-input:focus {
+            outline: none;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+        
+        .converter-select option {
+            background-color: #333;
+            color: white;
+        }
+        
+        .converter-input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .swap-btn {
+            background-color: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+        
+        .swap-btn:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+            transform: rotate(180deg);
+        }
+        
+        .converter-result {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+    </style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="nav-logo">
-                <i class="fas fa-coins"></i>
-                <span>AsrorCodeX</span>
-            </div>
-            <ul class="nav-menu">
-                <li><a href="#hero" class="nav-link">Home</a></li>
-                <li><a href="#converter" class="nav-link">Konvertor</a></li>
-                <li><a href="#info" class="nav-link">Info</a></li>
-                <li><a href="#rates" class="nav-link">Kurslar</a></li>
-            </ul>
-            <div class="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <section id="hero" class="hero-section">
-        <div class="particles-container">
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-        </div>
-        <div class="hero-content">
-            <h1 class="hero-title">
-                <span class="title-main">Valyuta Konvertori</span>
-                <span class="title-sub">by AsrorCodeX</span>
-            </h1>
-            <p class="hero-description">
-                Real-time valyuta ayirboshlash xizmati. O'zbek so'miga tezkina va aniq konvertatsiya.
-            </p>
-            <button class="cta-button" onclick="scrollToSection('converter')">
-                <span>Konvertatsiya qilish</span>
-                <i class="fas fa-arrow-right"></i>
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+    <div class="cursor-click"></div>
+    
+    <div class="rain-container" id="rainContainer"></div>
+    
+    <div class="container">
+        <header>
+            <h1><span class="emoji">💰</span> Valyuta Kurslari <span class="emoji">💸</span></h1>
+            <p class="subtitle">O'zbekistondagi eng aniq valyuta kurslari</p>
+            <button class="refresh-btn" id="refreshBtn">
+                <i class="fas fa-sync-alt"></i> Yangilash
             </button>
+        </header>
+        
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>Ma'lumotlar yuklanmoqda...</p>
         </div>
-        <div class="hero-visual">
-            <div class="floating-card">
-                <i class="fas fa-exchange-alt"></i>
-                <span>1 USD = 12,371.92 UZS</span>
-            </div>
-            <div class="floating-card">
-                <i class="fas fa-chart-line"></i>
-                <span>Live kurslar</span>
-            </div>
-        </div>
-    </section>
-
-    <!-- Converter Section -->
-    <section id="converter" class="converter-section">
-        <div class="container">
-            <h2 class="section-title">Valyuta Konvertori</h2>
-            <div class="converter-card">
-                <div class="converter-header">
-                    <i class="fas fa-calculator"></i>
-                    <h3>Summani kiriting</h3>
-                </div>
-                <form class="converter-form">
-                    <div class="input-group">
-                        <label for="amount">Miqdor</label>
-                        <input type="number" id="amount" placeholder="0.00" step="0.01" min="0">
-                    </div>
-                    <div class="input-group">
-                        <label for="currency">Valyuta</label>
-                        <select id="currency">
-                            <option value="USD">AQSH Dollari (USD)</option>
-                            <option value="EUR">Yevro (EUR)</option>
-                            <option value="RUB">Rossiya Rubli (RUB)</option>
-                        </select>
-                    </div>
-                    <button type="submit" class="convert-button">
-                        <span>Konvertatsiya qilish</span>
-                        <i class="fas fa-sync-alt"></i>
-                    </button>
-                </form>
-                <div class="result-container">
-                    <div class="result-label">Natija:</div>
-                    <div class="result-amount">
-                        <span id="result-value">0</span>
-                        <span class="currency-symbol">UZS</span>
-                    </div>
-                    <div class="exchange-rate">
-                        <i class="fas fa-info-circle"></i>
-                        <span id="rate-info">1 USD = 12,371.92 UZS</span>
+        
+        <main id="currencyContainer">
+            <div class="row">
+                <div class="col-md-6 col-lg-4">
+                    <div class="currency-card">
+                        <div class="d-flex align-items-center">
+                            <span class="currency-icon">🇺🇸</span>
+                            <div>
+                                <div class="currency-name">AQSH Dollari</div>
+                                <div class="currency-rate">12,450.00 UZS</div>
+                                <div class="currency-change positive">
+                                    <i class="fas fa-arrow-up"></i> +50.00 (+0.40%)
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Info Section -->
-    <section id="info" class="info-section">
-        <div class="container">
-            <h2 class="section-title">Qanday ishlaydi?</h2>
-            <div class="info-grid">
-                <div class="info-card">
-                    <div class="info-icon">
-                        <i class="fas fa-globe"></i>
+                
+                <div class="col-md-6 col-lg-4">
+                    <div class="currency-card">
+                        <div class="d-flex align-items-center">
+                            <span class="currency-icon">🇪🇺</span>
+                            <div>
+                                <div class="currency-name">Yevro</div>
+                                <div class="currency-rate">13,550.00 UZS</div>
+                                <div class="currency-change positive">
+                                    <i class="fas fa-arrow-up"></i> +30.00 (+0.22%)
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <h3>Real-time API</h3>
-                    <p>Eng so'nggi valyuta kurslarini real-time rejimida olish uchun xavfsiz API dan foydalanamiz.</p>
                 </div>
-                <div class="info-card">
-                    <div class="info-icon">
-                        <i class="fas fa-shield-alt"></i>
+                
+                <div class="col-md-6 col-lg-4">
+                    <div class="currency-card">
+                        <div class="d-flex align-items-center">
+                            <span class="currency-icon">🇷🇺</span>
+                            <div>
+                                <div class="currency-name">Rossiya Rubli</div>
+                                <div class="currency-rate">135.50 UZS</div>
+                                <div class="currency-change negative">
+                                    <i class="fas fa-arrow-down"></i> -0.50 (-0.37%)
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <h3>Xavfsiz va Ishonchli</h3>
-                    <p>API ulanishi uzilganda, ishonchli zaxira kurslaridan foydalanamiz.</p>
                 </div>
-                <div class="info-card">
-                    <div class="info-icon">
-                        <i class="fas fa-tachometer-alt"></i>
+                
+                <div class="col-md-6 col-lg-4">
+                    <div class="currency-card">
+                        <div class="d-flex align-items-center">
+                            <span class="currency-icon">🇬🇧</span>
+                            <div>
+                                <div class="currency-name">Britaniya Funt Sterlingi</div>
+                                <div class="currency-rate">15,650.00 UZS</div>
+                                <div class="currency-change positive">
+                                    <i class="fas fa-arrow-up"></i> +80.00 (+0.51%)
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <h3>Tezkina Natija</h3>
-                    <p>Minimalistik va tezkina interfeys orqali bir necha soniyada konvertatsiya.</p>
                 </div>
-                <div class="info-card">
-                    <div class="info-icon">
-                        <i class="fas fa-mobile-alt"></i>
+                
+                <div class="col-md-6 col-lg-4">
+                    <div class="currency-card">
+                        <div class="d-flex align-items-center">
+                            <span class="currency-icon">🇯🇵</span>
+                            <div>
+                                <div class="currency-name">Yaponiya Yenasi</div>
+                                <div class="currency-rate">85.50 UZS</div>
+                                <div class="currency-change negative">
+                                    <i class="fas fa-arrow-down"></i> -0.20 (-0.23%)
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <h3>Responsive Design</h3>
-                    <p>Barcha qurilmalarda mukammal ko'rinish - kompyuter, planshet va mobil.</p>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Live Rates Section -->
-    <section id="rates" class="rates-section">
-        <div class="container">
-            <h2 class="section-title">Bugungi Valyuta Kurslari</h2>
-            <div class="rates-table-container">
-                <table class="rates-table">
-                    <thead>
-                        <tr>
-                            <th>Valyuta</th>
-                            <th>Kod</th>
-                            <th>Kurs (UZS)</th>
-                            <th>O'zgarish</th>
-                        </tr>
-                    </thead>
-                    <tbody id="rates-tbody">
-                        <tr>
-                            <td><i class="fas fa-dollar-sign"></i>AQSH Dollari</td>
-                            <td>USD</td>
-                            <td class="rate-value">12,371.92</td>
-                            <td class="rate-change positive">+0.15%</td>
-                        </tr>
-                        <tr>
-                            <td><i class="fas fa-euro-sign"></i>Yevro</td>
-                            <td>EUR</td>
-                            <td class="rate-value">14,000.00</td>
-                            <td class="rate-change negative">-0.08%</td>
-                        </tr>
-                        <tr>
-                            <td><i class="fas fa-ruble-sign"></i>Rossiya Rubli</td>
-                            <td>RUB</td>
-                            <td class="rate-value">140.00</td>
-                            <td class="rate-change positive">+0.25%</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <div class="last-updated">
-                    <i class="fas fa-clock"></i>
-                    <span>So'nggi yangilanish: <span id="last-update">Yuklanmoqda...</span></span>
+                
+                <div class="col-md-6 col-lg-4">
+                    <div class="currency-card">
+                        <div class="d-flex align-items-center">
+                            <span class="currency-icon">🇨🇳</span>
+                            <div>
+                                <div class="currency-name">Xitoy Yuan</div>
+                                <div class="currency-rate">1,750.00 UZS</div>
+                                <div class="currency-change positive">
+                                    <i class="fas fa-arrow-up"></i> +5.00 (+0.29%)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
+        </main>
+        
+        <div class="update-time">
+            <p><i class="far fa-clock"></i> Oxirgi yangilanish: <span id="updateTime"></span></p>
         </div>
-    </section>
-
-    <!-- Footer Section -->
-    <footer class="footer-section">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-logo">
-                    <div class="logo-glow">
-                        <i class="fas fa-coins"></i>
-                    </div>
-                    <span>AsrorCodeX</span>
+        
+        <!-- Converter Section -->
+        <section class="converter-section">
+            <h2 class="converter-title"><span class="emoji">🔄</span> Valyuta Konverteri <span class="emoji">💱</span></h2>
+            
+            <div class="converter-container">
+                <div class="converter-box">
+                    <select class="converter-select" id="fromCurrency">
+                        <option value="UZS" selected>O'zbekiston So'mi</option>
+                        <option value="USD">AQSH Dollari</option>
+                        <option value="EUR">Yevro</option>
+                        <option value="RUB">Rossiya Rubli</option>
+                        <option value="GBP">Britaniya Funt Sterlingi</option>
+                        <option value="JPY">Yaponiya Yenasi</option>
+                        <option value="CNY">Xitoy Yuan</option>
+                    </select>
+                    <input type="number" class="converter-input" id="fromAmount" placeholder="Miqdorni kiriting" value="1000">
                 </div>
-                <p class="footer-text">
-                    Professional valyuta konvertatsiya xizmati. 2024 Barcha huquqlar himoyalangan.
-                </p>
-                <div class="footer-links">
-                    <a href="#hero" class="footer-link">Bosh sahifa</a>
-                    <a href="#converter" class="footer-link">Konvertor</a>
-                    <a href="#info" class="footer-link">Info</a>
-                    <a href="#rates" class="footer-link">Kurslar</a>
+                
+                <button class="swap-btn" id="swapBtn">
+                    <i class="fas fa-exchange-alt"></i>
+                </button>
+                
+                <div class="converter-box">
+                    <select class="converter-select" id="toCurrency">
+                        <option value="UZS">O'zbekiston So'mi</option>
+                        <option value="USD" selected>AQSH Dollari</option>
+                        <option value="EUR">Yevro</option>
+                        <option value="RUB">Rossiya Rubli</option>
+                        <option value="GBP">Britaniya Funt Sterlingi</option>
+                        <option value="JPY">Yaponiya Yenasi</option>
+                        <option value="CNY">Xitoy Yuan</option>
+                    </select>
+                    <input type="text" class="converter-input" id="toAmount" placeholder="Natija" readonly>
                 </div>
             </div>
-        </div>
-        <button class="back-to-top" onclick="scrollToTop()">
-            <i class="fas fa-arrow-up"></i>
-        </button>
-    </footer>
-
-    <script src="script.js"></script>
+            
+            <div class="converter-result" id="converterResult">
+                1,000 UZS = 0.08 USD
+            </div>
+        </section>
+        
+        <footer class="footer">
+            <p>Barcha ma'lumotlar O'zbekiston Markaziy Banki rasmiy ma'lumotlariga asoslanadi</p>
+            <p>© 2023 Valyuta Kurslari. Barcha huquqlar himoyalangan.</p>
+        </footer>
+    </div>
+    
+    <div class="sticker" style="top: 10%; left: 5%;">💰</div>
+    <div class="sticker" style="top: 20%; right: 10%; animation-delay: 1s;">💵</div>
+    <div class="sticker" style="bottom: 15%; left: 8%; animation-delay: 2s;">💴</div>
+    <div class="sticker" style="bottom: 25%; right: 5%; animation-delay: 3s;">💶</div>
+    <div class="sticker" style="top: 40%; left: 3%; animation-delay: 4s;">💷</div>
+    
+    <script>
+        // Custom cursor
+        const cursor = document.querySelector('.cursor');
+        const cursorFollower = document.querySelector('.cursor-follower');
+        const cursorClick = document.querySelector('.cursor-click');
+        
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+            
+            setTimeout(() => {
+                cursorFollower.style.left = e.clientX + 'px';
+                cursorFollower.style.top = e.clientY + 'px';
+            }, 100);
+        });
+        
+        document.addEventListener('mousedown', () => {
+            cursorClick.style.left = cursor.style.left;
+            cursorClick.style.top = cursor.style.top;
+            cursorClick.style.transform = 'translate(-50%, -50%) scale(1)';
+            
+            cursor.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+            cursorFollower.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
+        });
+        
+        document.addEventListener('mouseup', () => {
+            cursorClick.style.transform = 'translate(-50%, -50%) scale(0)';
+            
+            cursor.style.backgroundColor = 'transparent';
+            cursorFollower.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+        });
+        
+        // Currency rain effect
+        const rainContainer = document.getElementById('rainContainer');
+        const currencySymbols = ['$', '€', '£', '¥', '₽', '₩', '₹', '₺', '₴', '₸'];
+        
+        document.addEventListener('click', (e) => {
+            // Don't trigger rain on button clicks
+            if (e.target.closest('button') || e.target.closest('select') || e.target.closest('input')) return;
+            
+            for (let i = 0; i < 20; i++) {
+                setTimeout(() => {
+                    const currencyRain = document.createElement('div');
+                    currencyRain.classList.add('currency-rain');
+                    currencyRain.textContent = currencySymbols[Math.floor(Math.random() * currencySymbols.length)];
+                    
+                    const leftPosition = Math.random() * window.innerWidth;
+                    const animationDuration = Math.random() * 2 + 1;
+                    const fontSize = Math.random() * 1.5 + 1;
+                    
+                    currencyRain.style.left = leftPosition + 'px';
+                    currencyRain.style.animationDuration = animationDuration + 's';
+                    currencyRain.style.fontSize = fontSize + 'rem';
+                    currencyRain.style.color = `hsl(${Math.random() * 60 + 30}, 100%, 70%)`;
+                    
+                    rainContainer.appendChild(currencyRain);
+                    
+                    setTimeout(() => {
+                        currencyRain.remove();
+                    }, animationDuration * 1000);
+                }, i * 100);
+            }
+        });
+        
+        // Update time
+        function updateTime() {
+            const now = new Date();
+            const timeString = now.toLocaleString('uz-UZ');
+            document.getElementById('updateTime').textContent = timeString;
+        }
+        
+        updateTime();
+        
+        // Refresh button
+        document.getElementById('refreshBtn').addEventListener('click', function() {
+            const loading = document.getElementById('loading');
+            const currencyContainer = document.getElementById('currencyContainer');
+            
+            loading.style.display = 'block';
+            currencyContainer.style.opacity = '0.3';
+            
+            // Simulate API call
+            setTimeout(() => {
+                loading.style.display = 'none';
+                currencyContainer.style.opacity = '1';
+                updateTime();
+                
+                // Show notification
+                const notification = document.createElement('div');
+                notification.className = 'alert alert-success position-fixed top-0 start-50 translate-middle-x mt-3';
+                notification.style.zIndex = '1000';
+                notification.innerHTML = '<i class="fas fa-check-circle"></i> Ma\'lumotlar muvaffaqiyatli yangilandi!';
+                document.body.appendChild(notification);
+                
+                setTimeout(() => {
+                    notification.remove();
+                }, 3000);
+            }, 1500);
+        });
+        
+        // Converter functionality
+        const rates = {
+            UZS: 1,
+            USD: 12450,
+            EUR: 13550,
+            RUB: 135.5,
+            GBP: 15650,
+            JPY: 85.5,
+            CNY: 1750
+        };
+        
+        const fromCurrency = document.getElementById('fromCurrency');
+        const toCurrency = document.getElementById('toCurrency');
+        const fromAmount = document.getElementById('fromAmount');
+        const toAmount = document.getElementById('toAmount');
+        const swapBtn = document.getElementById('swapBtn');
+        const converterResult = document.getElementById('converterResult');
+        
+        function convert() {
+            const from = fromCurrency.value;
+            const to = toCurrency.value;
+            const amount = parseFloat(fromAmount.value) || 0;
+            
+            // Convert from source currency to UZS
+            const amountInUZS = amount * rates[from];
+            
+            // Convert from UZS to target currency
+            const result = amountInUZS / rates[to];
+            
+            // Display result
+            toAmount.value = result.toFixed(2);
+            
+            // Update result text
+            const fromSymbol = from === 'UZS' ? 'so\'m' : from;
+            const toSymbol = to === 'UZS' ? 'so\'m' : to;
+            converterResult.textContent = `${amount.toLocaleString('uz-UZ')} ${fromSymbol} = ${result.toFixed(2).toLocaleString('uz-UZ')} ${toSymbol}`;
+        }
+        
+        function swapCurrencies() {
+            const tempValue = fromCurrency.value;
+            fromCurrency.value = toCurrency.value;
+            toCurrency.value = tempValue;
+            convert();
+        }
+        
+        // Event listeners
+        fromAmount.addEventListener('input', convert);
+        fromCurrency.addEventListener('change', convert);
+        toCurrency.addEventListener('change', convert);
+        swapBtn.addEventListener('click', swapCurrencies);
+        
+        // Initial conversion
+        convert();
+        
+        // Add some animation to currency cards on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+        
+        document.querySelectorAll('.currency-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            observer.observe(card);
+        });
+    </script>
 </body>
 </html>
