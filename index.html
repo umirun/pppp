@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>💰 Valyuta → So‘m Konvertori | AsrorCodeX</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="app">
+    <h1 class="title">💰 Valyuta → So‘m Konvertori | AsrorCodeX</h1>
+
+    <section class="panel">
+      <div class="field">
+        <label for="amount">Miqdor</label>
+        <input id="amount" type="number" step="0.01" placeholder="Masalan: 100"/>
+      </div>
+
+      <div class="field">
+        <label for="currency">Valyuta</label>
+        <select id="currency">
+          <option value="USD" selected>USD — AQSh Dollari</option>
+          <option value="RUB">RUB — Rossiya Rubli</option>
+        </select>
+      </div>
+
+      <button id="convertBtn" class="btn">Convert → UZS</button>
+
+      <div id="result" class="result">Natija bu yerda ko‘rinadi</div>
+      <div id="status" class="status">Tayyor...</div>
+    </section>
+
+    <footer class="footer">
+      <span>Online/Offline ishlaydi. Manba: open.er-api.com</span>
+    </footer>
+  </main>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
