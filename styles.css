@@ -1,0 +1,117 @@
+/* Hacker-style: black background, neon green text, glowing buttons */
+:root {
+  --bg: #0a0a0a;
+  --text: #39ff14;
+  --text-dim: #2cc10f;
+  --accent: #00ff88;
+  --danger: #ff3b3b;
+  --card: #101010;
+  --border: #1e1e1e;
+  --shadow: 0 0 12px rgba(57,255,20,0.4), 0 0 24px rgba(57,255,20,0.2);
+}
+
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  background: radial-gradient(1200px 600px at 50% 10%, #0d0d0d, var(--bg));
+  color: var(--text);
+  font-family: "Courier New", Courier, monospace;
+  display: grid;
+  place-items: center;
+}
+
+.app {
+  width: 92%;
+  max-width: 720px;
+  text-align: center;
+}
+
+.title {
+  margin: 24px 0;
+  font-size: 1.8rem;
+  text-shadow: 0 0 8px rgba(57,255,20,0.6), 0 0 18px rgba(57,255,20,0.3);
+}
+
+.panel {
+  background: linear-gradient(160deg, rgba(0,0,0,0.55), rgba(0,0,0,0.35));
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 24px;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(4px);
+}
+
+.field {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 16px;
+  text-align: left;
+}
+
+label {
+  color: var(--text-dim);
+  font-size: 0.95rem;
+}
+
+input, select {
+  width: 100%;
+  padding: 12px 14px;
+  background: #0c0c0c;
+  border: 1px solid #1f1f1f;
+  border-radius: 10px;
+  color: var(--text);
+  outline: none;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+input::placeholder { color: #248e14; }
+
+input:focus, select:focus {
+  border-color: var(--text);
+  box-shadow: 0 0 8px rgba(57,255,20,0.4);
+}
+
+.btn {
+  cursor: pointer;
+  margin-top: 8px;
+  width: 100%;
+  padding: 14px 18px;
+  font-weight: bold;
+  color: #000;
+  background: linear-gradient(135deg, var(--text), var(--accent));
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(57,255,20,0.8), 0 0 24px rgba(0,255,136,0.4);
+  transition: transform 0.08s ease-in-out, box-shadow 0.2s ease-in-out, filter 0.2s ease;
+}
+
+.btn:hover {
+  filter: brightness(1.1) contrast(1.05);
+  box-shadow: 0 0 14px rgba(57,255,20,1), 0 0 32px rgba(0,255,136,0.5);
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.result {
+  margin-top: 18px;
+  font-size: 1.2rem;
+  color: var(--text);
+  min-height: 1.2em;
+  word-break: break-word;
+}
+
+.status {
+  margin-top: 10px;
+  font-size: 0.9rem;
+  color: var(--text-dim);
+}
+
+.footer {
+  margin-top: 18px;
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  opacity: 0.9;
+}
